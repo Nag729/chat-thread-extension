@@ -1,7 +1,7 @@
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    id="fai"
+    class="fai"
     :class="$props.class"
     :viewBox="`0 0 ${width} ${height}`"
   >
@@ -47,10 +47,12 @@
 </script>
 
 <style lang="scss" scoped>
-  #fai {
+  .fai {
     position: absolute;
-    width: 8%;
-    top: -1vh;
+    z-index: 10;
+    color: dimgray;
+    width: 6%;
+    top: 0;
     right: 0;
   }
 </style>
