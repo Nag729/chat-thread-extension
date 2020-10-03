@@ -1,8 +1,8 @@
 {
-  "name": "Google Chat Thread List",
+  "name": "Google Chat Threads",
   "version": "1.0.0",
   "manifest_version": 2,
-  "description": "Chrome Extension for Google Chat",
+  "description": "Display Thread Link in Google Chat",
   "content_scripts": [
     {
       "matches": ["https://chat.google.com/u/2/room/*"],
