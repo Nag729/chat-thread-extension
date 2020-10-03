@@ -107,12 +107,13 @@
   }
 
   #toggle-icon {
-    top: -12px;
+    top: -26px;
     right: 2vw;
     width: 8%;
   }
 
   #reload-icon {
-    top: -9px;
+    top: -24px;
+    right: 2px;
   }
 </style>

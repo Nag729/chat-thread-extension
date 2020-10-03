@@ -19,7 +19,7 @@
   #thread-extension-container {
     position: absolute;
     right: 3vw;
-    top: 14vh;
+    top: 16vh;
     max-width: 25vw;
     z-index: 10;
   }
