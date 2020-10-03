@@ -51,7 +51,6 @@
     position: absolute;
     z-index: 10;
     color: dimgray;
-    width: 6%;
     top: 0;
     right: 0;
   }

@@ -12,6 +12,7 @@
     </div>
     <!-- threads list -->
     <div>
+      <!-- TODO: 大量のリストがある場合に画面の縦幅を超える問題に対応する -->
       <ul :class="state.isTransparent ? 'transparent-ul' : 'normal-ul'">
         <li
           v-for="(thread, idx) in state.threads"
@@ -52,6 +53,7 @@
           if (isHeader) {
             // タイトルから不要な情報を削除
             let title = el.innerHTML;
+            // TODO: タイトルに`.`が入っていた場合に対応する
             const regex = /\*/gi;
             title = title.split('.')[1].replace(regex, '');
 
@@ -66,6 +68,7 @@
       };
 
       // スレッド名をクリックした時にその要素までスクロールする
+      // TODO: 個人チャットで押されたら要素が消える問題に対応する
       const scrollToThread = el => {
         el.scrollIntoView(true);
       };
@@ -109,11 +112,12 @@
   #toggle-icon {
     top: -26px;
     right: 2vw;
-    width: 8%;
+    width: 25px;
   }
 
   #reload-icon {
     top: -24px;
     right: 2px;
+    width: 19px;
   }
 </style>
