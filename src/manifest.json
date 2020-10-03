@@ -5,8 +5,9 @@
   "description": "Chrome Extension for Google Chat",
   "content_scripts": [
     {
-      "matches": ["https://www.google.co.jp/*"],
-      "js": ["js/chunk-vendors.js", "js/main.js"]
+      "matches": ["https://chat.google.com/u/2/room/*"],
+      "js": ["js/chunk-vendors.js", "js/app.js"],
+      "css": ["css/app.css"]
     }
   ]
 }

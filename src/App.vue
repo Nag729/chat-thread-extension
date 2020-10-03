@@ -14,3 +14,10 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  #thread-extension-container {
+    position: absolute;
+    z-index: 10;
+  }
+</style>
