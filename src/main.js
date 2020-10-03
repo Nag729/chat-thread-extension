@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@/plugins/font-awesome';
 import { createApp } from 'vue';
 import App from './App.vue';
 
+// TODO: setTimeoutをもうちょっといい方法に変える
 // redirectの場合に備えて5秒待つ
 setTimeout(() => {
   // Google Chat が DOM を読み込んでから実行する
