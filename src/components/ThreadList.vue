@@ -12,8 +12,12 @@
     </div>
     <!-- threads list -->
     <div>
-      <!-- TODO: 大量のリストがある場合に画面の縦幅を超える問題に対応する -->
-      <ul :class="state.isTransparent ? 'transparent-ul' : 'normal-ul'">
+      <ul
+        :class="[
+          'threads-list',
+          state.isTransparent ? 'transparent-ul' : 'normal-ul',
+        ]"
+      >
         <li
           v-for="(thread, idx) in state.threads"
           :key="idx"
@@ -34,11 +38,19 @@
       const state = reactive({
         // スレッド情報を保持
         threads: [],
+        // hide button
         isTransparent: false,
       });
 
       onMounted(() => {
+        // initial load
         refreshThreads();
+
+        // Observerを作成して後から読み込まれたスレッドにも対応する
+        const observer = new MutationObserver(refreshThreads);
+        observer.observe(document.getElementsByTagName('body')[0], {
+          attributes: true,
+        });
       });
 
       // スレッド情報を取得してstateを更新する
@@ -52,10 +64,19 @@
           const isHeader = el.hasAttribute('aria-label');
           if (isHeader) {
             // タイトルから不要な情報を削除
-            let title = el.innerHTML;
-            // TODO: タイトルに`.`が入っていた場合に対応する
+            let heading = el.innerHTML;
+
+            // タイトルに`.`が入っていた場合に対応
+            let title = '';
+            const headArr = heading.split('.');
+            const dotCnt = headArr.length;
+            for (let i = 1; i <= dotCnt - 4; i++) {
+              title += headArr[i];
+            }
+
+            // bold文字をreplace
             const regex = /\*/gi;
-            title = title.split('.')[1].replace(regex, '');
+            title = title.replace(regex, '');
 
             // スレッド情報をstate.threadsに詰める
             const thread = {
@@ -68,7 +89,6 @@
       };
 
       // スレッド名をクリックした時にその要素までスクロールする
-      // TODO: 個人チャットで押されたら要素が消える問題に対応する
       const scrollToThread = el => {
         el.scrollIntoView(true);
       };
@@ -99,6 +119,11 @@
     line-height: 1.5;
     padding: 0.5em;
     list-style-type: none !important; /*ポチ消す*/
+  }
+
+  .threads-list {
+    overflow: scroll;
+    height: 60vh;
   }
 
   .normal-ul {
