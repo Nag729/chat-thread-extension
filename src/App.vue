@@ -18,9 +18,9 @@
 <style lang="scss" scoped>
   #thread-extension-container {
     position: absolute;
-    right: 3vw;
-    top: 16vh;
-    max-width: 25vw;
+    right: 35px;
+    top: 100px;
+    max-width: 300px;
     z-index: 1;
   }
 </style>

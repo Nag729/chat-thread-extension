@@ -135,8 +135,8 @@
   }
 
   #toggle-icon {
-    top: -26px;
-    right: 2vw;
+    top: -25px;
+    right: 25px;
     width: 25px;
   }
 

@@ -49,7 +49,7 @@
 <style lang="scss" scoped>
   .fai {
     position: absolute;
-    z-index: 10;
+    z-index: 1;
     color: dimgray;
     top: 0;
     right: 0;
