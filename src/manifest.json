@@ -5,9 +5,10 @@
   "description": "Display Thread Link in Google Chat",
   "content_scripts": [
     {
-      "matches": ["https://chat.google.com/u/2/room/*"],
+      "matches": ["https://chat.google.com/*"],
       "js": ["js/chunk-vendors.js", "js/app.js"],
-      "css": ["css/app.css"]
+      "css": ["css/app.css"],
+      "run_at": "document_end"
     }
   ],
   "icons": {
