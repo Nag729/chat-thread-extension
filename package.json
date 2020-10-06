@@ -10,9 +10,7 @@
     "copy:manifest": "cpx src/manifest.json dist/",
     "copy": "run-p copy:manifest copy:image",
     "remove": "rimraf dist/index.html",
-    "build": "run-s compile copy remove",
-    "zip": "run(){ zip -r -X releases/$1.zip dist; }; run",
-    "release": "npm run build && npm run zip $1"
+    "build": "run-s compile copy remove"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.31",
