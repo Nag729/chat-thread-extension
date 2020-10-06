@@ -9,5 +9,8 @@
       "js": ["js/chunk-vendors.js", "js/app.js"],
       "css": ["css/app.css"]
     }
-  ]
+  ],
+  "icons": {
+    "48": "48.png"
+  }
 }
