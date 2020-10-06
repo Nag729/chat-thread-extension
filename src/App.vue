@@ -21,6 +21,6 @@
     right: 3vw;
     top: 16vh;
     max-width: 25vw;
-    z-index: 10;
+    z-index: 1;
   }
 </style>
