@@ -11,6 +11,7 @@
       <fa id="reload-icon" icon="redo" @click="refreshThreads"></fa>
     </div>
     <!-- threads list -->
+		<!-- TODO: v-showで表示・非表示切り替える -->
     <div>
       <ul
         :class="[
@@ -31,7 +32,7 @@
 </template>
 
 <script>
-  import { onMounted, reactive, defineComponent } from 'vue';
+	import { onMounted, reactive, defineComponent } from 'vue';
 
   export default defineComponent({
     setup() {
@@ -46,7 +47,8 @@
         // initial load
         refreshThreads();
 
-        // Observerを作成して後から読み込まれたスレッドにも対応する
+				// Observerを作成して後から読み込まれたスレッドにも対応する
+				// TODO: 新しいスレッドを読み込んだ時にもスレッドを再読み込みする
         const observer = new MutationObserver(refreshThreads);
         observer.observe(document.getElementsByTagName('body')[0], {
           attributes: true,
@@ -69,7 +71,8 @@
             // タイトルに`.`が入っていた場合に対応
             let title = '';
             const headArr = heading.split('.');
-            const dotCnt = headArr.length;
+						const dotCnt = headArr.length;
+						// TODO: 「未読」に対応する → 情報付け足す
             for (let i = 1; i <= dotCnt - 4; i++) {
               title += headArr[i];
             }
@@ -90,7 +93,7 @@
 
       // スレッド名をクリックした時にその要素までスクロールする
       const scrollToThread = el => {
-        el.scrollIntoView(true);
+				el.scrollIntoView(true);
       };
 
       return {
@@ -122,12 +125,13 @@
   }
 
   .threads-list {
+		// TODO: 上限を超えた場合だけスクロールさせる
     overflow: scroll;
-    height: 60vh;
+    max-height: 60vh;
   }
 
   .normal-ul {
-    opacity: 0.8;
+    opacity: 0.9;
   }
 
   .transparent-ul {
