@@ -11,14 +11,8 @@
       <fa id="reload-icon" icon="redo" @click="refreshThreads"></fa>
     </div>
     <!-- threads list -->
-		<!-- TODO: v-showで表示・非表示切り替える -->
-    <div>
-      <ul
-        :class="[
-          'threads-list',
-          state.isTransparent ? 'transparent-ul' : 'normal-ul',
-        ]"
-      >
+    <div v-show="!state.isTransparent">
+      <ul :class="['threads-list']">
         <li
           v-for="(thread, idx) in state.threads"
           :key="idx"
@@ -32,7 +26,7 @@
 </template>
 
 <script>
-	import { onMounted, reactive, defineComponent } from 'vue';
+  import { onMounted, reactive, defineComponent } from 'vue';
 
   export default defineComponent({
     setup() {
@@ -44,56 +38,64 @@
       });
 
       onMounted(() => {
-        // initial load
-        refreshThreads();
+        const delayRefresh = () => {
+          setTimeout(refreshThreads, 300);
+        };
 
-				// Observerを作成して後から読み込まれたスレッドにも対応する
-				// TODO: 新しいスレッドを読み込んだ時にもスレッドを再読み込みする
-        const observer = new MutationObserver(refreshThreads);
-        observer.observe(document.getElementsByTagName('body')[0], {
+        // roomの変更を監視
+        const roomObserver = new MutationObserver(delayRefresh);
+        roomObserver.observe(document.getElementsByTagName('body')[0], {
           attributes: true,
         });
+
+        // // TODO: threadの変更を監視
+        // const observedEl = document.querySelectorAll('[role="main"]')[0]
+        //   .children[0].children[0].children[0];
+        // const threadObserver = new MutationObserver(delayRefresh);
+        // threadObserver.observe(observedEl, {
+        //   attributes: true,
+        //   childList: true,
+        // });
       });
 
       // スレッド情報を取得してstateを更新する
       const refreshThreads = () => {
+        // 情報の取得
+        const headings = document.querySelectorAll('[role="heading"]');
+        const headers = [];
+        for (const el of headings) {
+          if (el.hasAttribute('aria-label')) headers.push(el);
+        }
+
         // clear
         state.threads = [];
 
-        const headings = document.querySelectorAll('[role="heading"]');
-        headings.forEach(el => {
-          // スレッド情報を取得
-          const isHeader = el.hasAttribute('aria-label');
-          if (isHeader) {
-            // タイトルから不要な情報を削除
-            let heading = el.innerHTML;
+        // スレッド情報を取得
+        headers.forEach(el => {
+          // タイトルから不要な情報を削除
+          let heading = el.innerHTML;
 
-            // タイトルに`.`が入っていた場合に対応
-            let title = '';
-            const headArr = heading.split('.');
-						const dotCnt = headArr.length;
-						// TODO: 「未読」に対応する → 情報付け足す
-            for (let i = 1; i <= dotCnt - 4; i++) {
-              title += headArr[i];
-            }
+          // タイトルの文字列を取得
+          const headArr = heading.split('.');
+          const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
+          let title = headArr[idx];
 
-            // bold文字をreplace
-            const regex = /\*/gi;
-            title = title.replace(regex, '');
+          // bold文字をreplace
+          const regex = /\*/gi;
+          title = title.replace(regex, '');
 
-            // スレッド情報をstate.threadsに詰める
-            const thread = {
-              el: el,
-              title: title,
-            };
-            state.threads.push(thread);
-          }
+          // スレッド情報をstate.threadsに詰める
+          const thread = {
+            el: el,
+            title: title,
+          };
+          state.threads.push(thread);
         });
       };
 
       // スレッド名をクリックした時にその要素までスクロールする
       const scrollToThread = el => {
-				el.scrollIntoView(true);
+        el.scrollIntoView(true);
       };
 
       return {
@@ -125,17 +127,12 @@
   }
 
   .threads-list {
-		// TODO: 上限を超えた場合だけスクロールさせる
-    overflow: scroll;
+    overflow: auto;
     max-height: 60vh;
   }
 
   .normal-ul {
     opacity: 0.9;
-  }
-
-  .transparent-ul {
-    opacity: 0.2;
   }
 
   #toggle-icon {

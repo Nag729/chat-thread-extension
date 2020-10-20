@@ -20,7 +20,7 @@
     position: absolute;
     right: 35px;
     top: 100px;
-    max-width: 300px;
+    width: 300px;
     z-index: 1;
   }
 </style>
