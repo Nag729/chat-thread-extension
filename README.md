@@ -1,24 +1,9 @@
 # chat-thread-extension
 
-## Project setup
-```
-npm install
-```
+## Install Page
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+* https://chrome.google.com/webstore/detail/google-chat-threads/ofeljikmiggiajkgahjkfadmdipacbmm?hl=ja
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## About Project
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+* 
