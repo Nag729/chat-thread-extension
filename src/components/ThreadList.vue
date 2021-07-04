@@ -26,14 +26,13 @@
 </template>
 
 <script>
+  /* eslint-disable no-undef */
   import { onMounted, reactive, defineComponent } from 'vue';
 
   export default defineComponent({
     setup() {
       const state = reactive({
-        // スレッド情報を保持
         threads: [],
-        // hide button
         isTransparent: false,
       });
 
@@ -42,13 +41,14 @@
           setTimeout(refreshThreads, 300);
         };
 
-        // roomの変更を監視
+        // watch change of room.
         const roomObserver = new MutationObserver(delayRefresh);
+        // FIXME: change target tag.
         roomObserver.observe(document.getElementsByTagName('body')[0], {
           attributes: true,
         });
 
-        // // TODO: threadの変更を監視
+        // // TODO: watch change of thread.
         // const observedEl = document.querySelectorAll('[role="main"]')[0]
         //   .children[0].children[0].children[0];
         // const threadObserver = new MutationObserver(delayRefresh);
@@ -58,42 +58,47 @@
         // });
       });
 
-      // スレッド情報を取得してstateを更新する
+      /**
+       * get thread information and update state.
+       */
       const refreshThreads = () => {
-        // 情報の取得
         const headings = document.querySelectorAll('[role="heading"]');
         const headers = [];
         for (const el of headings) {
           if (el.hasAttribute('aria-label')) headers.push(el);
         }
 
-        // clear
+        // FIXME: iframe のコンテンツを取得できなかったので諦め><
+        console.log(`headings:`);
+        console.log(headings);
+
+        // clear state
         state.threads = [];
 
-        // スレッド情報を取得
-        headers.forEach(el => {
-          // タイトルから不要な情報を削除
-          let heading = el.innerHTML;
+        // // スレッド情報を取得
+        // headers.forEach(el => {
+        //   // タイトルから不要な情報を削除
+        //   let heading = el.innerHTML;
 
-          // タイトルの文字列を取得
-          const headArr = heading.split('.');
-          const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
-          let title = headArr[idx];
+        //   // タイトルの文字列を取得
+        //   const headArr = heading.split('.');
+        //   const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
+        //   let title = headArr[idx];
 
-          // bold文字をreplace
-          const regex = /\*/gi;
-          title = title.replace(regex, '');
+        //   // bold文字をreplace
+        //   const regex = /\*/gi;
+        //   title = title.replace(regex, '');
 
-          // スレッド情報をstate.threadsに詰める
-          const thread = {
-            el: el,
-            title: title,
-          };
-          state.threads.push(thread);
-        });
+        //   // スレッド情報をstate.threadsに詰める
+        //   const thread = {
+        //     el: el,
+        //     title: title,
+        //   };
+        //   state.threads.push(thread);
+        // });
       };
 
-      // スレッド名をクリックした時にその要素までスクロールする
+      // when thread clicked, scroll to it
       const scrollToThread = el => {
         el.scrollIntoView(true);
       };
@@ -117,13 +122,13 @@
   ol li {
     font-size: small;
     color: #404040;
-    border-left: solid 6px #1fa67a; /*左側の線*/
-    border-bottom: solid 2px #dadada; /*下に灰色線*/
+    border-left: solid 6px #1fa67a;
+    border-bottom: solid 2px #dadada;
     background: whitesmoke;
-    margin-bottom: 5px; /*下のバーとの余白*/
+    margin-bottom: 5px;
     line-height: 1.5;
     padding: 0.5em;
-    list-style-type: none !important; /*ポチ消す*/
+    list-style-type: none !important;
   }
 
   .threads-list {

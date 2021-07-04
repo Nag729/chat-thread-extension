@@ -2,19 +2,17 @@ import { FontAwesomeIcon } from '@/plugins/font-awesome';
 import { createApp } from 'vue';
 import App from './App.vue';
 
-const extensionStart = () => {
-  // DOM を更新
-  const element = document.querySelector('body > div');
-
-  // メインの div に Vue を読み込ませる用のタグを追加
+const setupExtension = () => {
+  // add empty div tag to DOM
+  const element = document.querySelector('body');
   const createdDom = document.createElement('div');
-  createdDom.id = 'thread-extension';
+  createdDom.id = 'thread-extension-container';
   element.insertAdjacentElement('beforeend', createdDom);
 
-  // Vue インスタンスの生成
+  // create Vue instance
   createApp(App)
     .component('fa', FontAwesomeIcon)
-    .mount('#thread-extension');
+    .mount('#thread-extension-container');
 };
 
-extensionStart();
+setupExtension();

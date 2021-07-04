@@ -1,5 +1,5 @@
 <template>
-  <div id="thread-extension-container">
+  <div id="thread-list-container">
     <ThreadList />
   </div>
 </template>
@@ -16,7 +16,7 @@
 </script>
 
 <style lang="scss" scoped>
-  #thread-extension-container {
+  #thread-list-container {
     position: absolute;
     right: 35px;
     top: 100px;

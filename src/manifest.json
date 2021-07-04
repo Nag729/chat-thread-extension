@@ -5,12 +5,14 @@
   "description": "Display Thread Link in Google Chat",
   "content_scripts": [
     {
-      "matches": ["https://chat.google.com/*"],
+      "matches": ["https://mail.google.com/chat/*"],
       "js": ["js/chunk-vendors.js", "js/app.js"],
       "css": ["css/app.css"],
-      "run_at": "document_end"
+      "run_at": "document_end",
+      "all_frames": true
     }
   ],
+  "permissions": ["tabs"],
   "icons": {
     "48": "48.png"
   }
