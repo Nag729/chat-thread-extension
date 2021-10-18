@@ -5,7 +5,7 @@
   "description": "Display Thread Link in Google Chat",
   "content_scripts": [
     {
-      "matches": ["https://mail.google.com/chat/*"],
+      "matches": ["https://chat.google.com/*"],
       "js": ["js/chunk-vendors.js", "js/app.js"],
       "css": ["css/app.css"],
       "run_at": "document_end",

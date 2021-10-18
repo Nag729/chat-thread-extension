@@ -38,24 +38,17 @@
 
       onMounted(() => {
         const delayRefresh = () => {
-          setTimeout(refreshThreads, 300);
+          // implementation was changed to `iframe` and the load timing became slower,
+          // so the delay time was increased.
+          setTimeout(refreshThreads, 1000);
         };
 
         // watch change of room.
         const roomObserver = new MutationObserver(delayRefresh);
-        // FIXME: change target tag.
+        // change target tag.
         roomObserver.observe(document.getElementsByTagName('body')[0], {
           attributes: true,
         });
-
-        // // TODO: watch change of thread.
-        // const observedEl = document.querySelectorAll('[role="main"]')[0]
-        //   .children[0].children[0].children[0];
-        // const threadObserver = new MutationObserver(delayRefresh);
-        // threadObserver.observe(observedEl, {
-        //   attributes: true,
-        //   childList: true,
-        // });
       });
 
       /**
@@ -68,34 +61,30 @@
           if (el.hasAttribute('aria-label')) headers.push(el);
         }
 
-        // FIXME: iframe のコンテンツを取得できなかったので諦め><
-        console.log(`headings:`);
-        console.log(headings);
-
         // clear state
         state.threads = [];
 
-        // // スレッド情報を取得
-        // headers.forEach(el => {
-        //   // タイトルから不要な情報を削除
-        //   let heading = el.innerHTML;
+        // スレッド情報を取得
+        headers.forEach(el => {
+          // タイトルから不要な情報を削除
+          let heading = el.innerHTML;
 
-        //   // タイトルの文字列を取得
-        //   const headArr = heading.split('.');
-        //   const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
-        //   let title = headArr[idx];
+          // タイトルの文字列を取得
+          const headArr = heading.split('.');
+          const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
+          let title = headArr[idx];
 
-        //   // bold文字をreplace
-        //   const regex = /\*/gi;
-        //   title = title.replace(regex, '');
+          // bold文字をreplace
+          const regex = /\*/gi;
+          title = title.replace(regex, '');
 
-        //   // スレッド情報をstate.threadsに詰める
-        //   const thread = {
-        //     el: el,
-        //     title: title,
-        //   };
-        //   state.threads.push(thread);
-        // });
+          // スレッド情報をstate.threadsに詰める
+          const thread = {
+            el: el,
+            title: title,
+          };
+          state.threads.push(thread);
+        });
       };
 
       // when thread clicked, scroll to it
