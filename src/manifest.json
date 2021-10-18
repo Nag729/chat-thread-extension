@@ -12,7 +12,6 @@
       "all_frames": true
     }
   ],
-  "permissions": ["tabs"],
   "icons": {
     "48": "48.png"
   }
