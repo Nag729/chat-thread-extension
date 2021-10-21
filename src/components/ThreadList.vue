@@ -64,21 +64,18 @@
         // clear state
         state.threads = [];
 
-        // スレッド情報を取得
         headers.forEach(el => {
-          // タイトルから不要な情報を削除
           let heading = el.innerHTML;
 
-          // タイトルの文字列を取得
-          const headArr = heading.split('.');
+          // create title from heading
+          const headArr = heading.split('. ');
           const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
           let title = headArr[idx];
 
-          // bold文字をreplace
+          // replace bold text
           const regex = /\*/gi;
           title = title.replace(regex, '');
 
-          // スレッド情報をstate.threadsに詰める
           const thread = {
             el: el,
             title: title,
