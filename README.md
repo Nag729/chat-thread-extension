@@ -2,7 +2,7 @@
 
 ## Install Page
 
-* https://chrome.google.com/webstore/detail/google-chat-threads/ofeljikmiggiajkgahjkfadmdipacbmm?hl=ja
+* https://chrome.google.com/webstore/detail/threads-for-google-chat/ofeljikmiggiajkgahjkfadmdipacbmm?hl=ja
 
 ## About Project
 
