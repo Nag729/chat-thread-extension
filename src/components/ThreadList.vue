@@ -29,6 +29,9 @@
   /* eslint-disable no-undef */
   import { onMounted, reactive, defineComponent } from 'vue';
 
+  const UNREAD_TEXT_LIST = [`未読`, `Unread`];
+  const SPACE_MANAGER_TEXT_LIST = [`スペースの管理者`, `Space Manager`];
+
   export default defineComponent({
     setup() {
       const state = reactive({
@@ -52,6 +55,33 @@
       });
 
       /**
+       * find title-index considering unread & space-manager
+       *
+       * NOTE: HEADER PATTERN
+       * 1. unread, space-manager neither exists:
+       *   - `USER_NAME. THREAD_TITLE. たった今. 1 件の返信`
+       * 2. only unread exists:
+       *   - `未読 1 件. USER_NAME. THREAD_TITLE. たった今. 1 件の返信`
+       * 3. only space-manager exists:
+       *   - `USER_NAME. スペースの管理者. THREAD_TITLE. 5 分. 1 件の返信`
+       * 4. both unread and space-manager exist:
+       *   - `未読 1 件. USER_NAME. スペースの管理者. THREAD_TITLE. たった今. 1 件の返信`
+       */
+      const findTitleIndex = headerList => {
+        const unreadCheckIndex = 0;
+        const hasUnread = UNREAD_TEXT_LIST.some(text =>
+          headerList[unreadCheckIndex].includes(text)
+        );
+
+        const spaceManagerCheckIndex = hasUnread ? 2 : 1;
+        const hasSpaceManager = SPACE_MANAGER_TEXT_LIST.some(text =>
+          headerList[spaceManagerCheckIndex].includes(text)
+        );
+
+        const titleIndex = (hasUnread ? 1 : 0) + 1 + (hasSpaceManager ? 1 : 0);
+        return titleIndex;
+      };
+      /**
        * get thread information and update state.
        */
       const refreshThreads = () => {
@@ -68,17 +98,13 @@
           let heading = el.innerHTML;
 
           // create title from heading
-          const headArr = heading.split('. ');
-          const idx = headArr[0].indexOf('未読') === -1 ? 1 : 2;
-          let title = headArr[idx];
+          const headerList = heading.split('. ');
+          const title = headerList[findTitleIndex(headerList)];
 
-          // replace bold text
           const regex = /\*/gi;
-          title = title.replace(regex, '');
-
           const thread = {
             el: el,
-            title: title,
+            title: title !== undefined ? title.replace(regex, '') : '',
           };
           state.threads.push(thread);
         });
