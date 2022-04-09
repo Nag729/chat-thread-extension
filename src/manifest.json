@@ -1,7 +1,7 @@
 {
   "name": "Threads for Google Chat",
-  "version": "2.1.0",
-  "manifest_version": 2,
+  "version": "2.2.0",
+  "manifest_version": 3,
   "description": "Display Thread Link in Google Chat",
   "content_scripts": [
     {
